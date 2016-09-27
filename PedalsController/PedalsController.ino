@@ -3,16 +3,16 @@
 
 #define DEBUG 1
 #define PIN_NUM 24
-#define SEND_PIN 16
-#define SENSOR_NUM 11
+#define SEND_PIN 2
+#define SENSOR_NUM 2
 #define SENSOR_TIMEOUT 10
 #define SENSOR_AUTOCAL 0xFFFFFFFF
 #define SENSOR_SAMPLES 30
 #define SENSOR_THRESHOLD 150
 
 
-char pins[] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 15 };
-char keys[] = { 'a', 's', 'w', 'v', 'f', 'r', 'b', 'y', 'h', 'i', 'k' };
+char pins[] = { 3, 4 };
+char keys[] = { 'v', 'b' };
 CapacitiveSensor *sensors[SENSOR_NUM];
 long values[SENSOR_NUM];
 
