@@ -55,7 +55,6 @@ void loop() {
 
 #if DEBUG
     Serial.print("\n");
-    delay(10);
 #endif
 }
 
