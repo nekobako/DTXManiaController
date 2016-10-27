@@ -41,16 +41,16 @@ void loop() {
     long value = sensors[i]->capacitiveSensor(SENSOR_SAMPLES);
 
 #if DEBUG
-    char buf[10];
-    bool pressed = value >= SENSOR_THRESHOLD;
-    sprintf(buf, "%c%4ld%c\t\t", pressed ? '[' : ' ', value, pressed ? ']' : ' ');
+    char buf[9];
+    sprintf(buf, value >= SENSOR_THRESHOLD ? "[%4ld]\t\t" : " %4ld \t\t", value);
     Serial.print(buf);
 #else
     if(values[i] < SENSOR_THRESHOLD && value >= SENSOR_THRESHOLD) {
       Keyboard.write(keys[i]);
     }
-    values[i] = value;
 #endif
+
+    values[i] = value;
   }
 
 #if DEBUG
