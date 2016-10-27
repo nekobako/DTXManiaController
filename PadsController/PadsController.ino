@@ -1,7 +1,7 @@
 #include <Keyboard.h>
 #include <CapacitiveSensor.h>
 
-#define DEBUG 1
+#define DEBUG 0
 #define PIN_NUM 24
 #define SEND_PIN 2
 #define SENSOR_NUM 9
