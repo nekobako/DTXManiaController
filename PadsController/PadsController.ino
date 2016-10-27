@@ -8,7 +8,7 @@
 #define SENSOR_TIMEOUT 10
 #define SENSOR_AUTOCAL 0xFFFFFFFF
 #define SENSOR_SAMPLES 30
-#define SENSOR_THRESHOLD 150
+#define SENSOR_THRESHOLD 100
 
 
 char pins[] = { 3, 4, 5, 6, 7, 8, 9, 10, 14 };
