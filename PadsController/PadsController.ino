@@ -8,14 +8,14 @@
 #define SENSOR_TIMEOUT 10
 #define SENSOR_AUTOCAL 100
 #define SENSOR_SAMPLES 30
-#define SENSOR_THRESHOLD 100
+#define SENSOR_THRESHOLD_TOUCH_DOWN 100
+#define SENSOR_THRESHOLD_TOUCH_UP 50
 
 
 char pins[] = { 3, 4, 5, 6, 7, 8, 9, 10, 14 };
 char keys[] = { 'a', 's', 'w', 'f', 'r', 'y', 'h', 'i', 'k' };
 CapacitiveSensor *sensors[SENSOR_NUM];
-long values[SENSOR_NUM];
-
+bool states[SENSOR_NUM];
 
 void setup() {
   for(int i = 0; i < PIN_NUM; i++) {
@@ -39,18 +39,19 @@ void setup() {
 void loop() {
   for(int i = 0; i < SENSOR_NUM; i++) {
     long value = sensors[i]->capacitiveSensor(SENSOR_SAMPLES);
+    bool state = states[i] ? value > SENSOR_THRESHOLD_TOUCH_UP : value >= SENSOR_THRESHOLD_TOUCH_DOWN;
 
 #if DEBUG
     char buf[9];
-    sprintf(buf, value >= SENSOR_THRESHOLD ? "[%4ld]\t\t" : " %4ld \t\t", value);
+    sprintf(buf, state ? "[%4ld]\t\t" : " %4ld \t\t", value);
     Serial.print(buf);
 #else
-    if(values[i] < SENSOR_THRESHOLD && value >= SENSOR_THRESHOLD) {
+    if(!states[i] && state) {
       Keyboard.write(keys[i]);
     }
 #endif
 
-    values[i] = value;
+    states[i] = state;
   }
 
 #if DEBUG
