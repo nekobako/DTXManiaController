@@ -26,11 +26,16 @@ void setup() {
 
 void loop() {
   for(int i = 0; i < SWITCH_NUM; i++) {
-    counts[i] = digitalRead(pins[i]) ? min(counts[i], SWITCH_THRESHOLD) + 1 : 0;
+    int count = digitalRead(pins[i]) ? min(counts[i] + 1, SWITCH_THRESHOLD) : 0;
 
-    if(counts[i] == SWITCH_THRESHOLD) {
-      Keyboard.write(keys[i]);
+    if(counts[i] != SWITCH_THRESHOLD && count == SWITCH_THRESHOLD) {
+      Keyboard.press(keys[i]);
     }
+    else if(counts[i] == SWITCH_THRESHOLD && count != SWITCH_THRESHOLD) {
+      Keyboard.release(keys[i]);
+    }
+
+    counts[i] = count;
   }
 }
 

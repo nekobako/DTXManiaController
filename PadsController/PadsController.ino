@@ -47,7 +47,10 @@ void loop() {
     Serial.print(buf);
 #else
     if(!states[i] && state) {
-      Keyboard.write(keys[i]);
+      Keyboard.press(keys[i]);
+    }
+    else if(states[i] && !state) {
+      Keyboard.release(keys[i]);
     }
 #endif
 
