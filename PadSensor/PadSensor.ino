@@ -3,8 +3,9 @@
 #define STATE_PIN 0
 #define SEND_PIN 1
 #define RECEIVE_PIN 2
-#define SAMPLES 60
-#define THRESHOLD 1800
+#define SAMPLES 100
+#define UPPER_THRESHOLD 2000
+#define LOWER_THRESHOLD 1800
 
 #define MODE_INPUT(pin) DDRB &= ~_BV(pin)
 #define MODE_OUTPUT(pin) DDRB |= _BV(pin)
@@ -14,6 +15,7 @@
 
 
 int cnt;
+bool state;
 
 void setup() {
   noInterrupts();
@@ -31,11 +33,13 @@ void loop() {
     sense();
   }
 
-  if(cnt >= THRESHOLD) {
+  if(!state && cnt >= UPPER_THRESHOLD) {
     WRITE_HIGH(STATE_PIN);  // state pin : OUTPUT HIGH
+    state = true;
   }
-  else {
+  else if(state && cnt <= LOWER_THRESHOLD) {
     WRITE_LOW(STATE_PIN);   // state pin : OUTPUT LOW
+    state = false;
   }
 }
 
